@@ -39,6 +39,9 @@ jobs:
           flutter-version: '3.x'
           channel: 'stable'
 
+      - name: Generate Missing Android Platform Files
+        run: flutter create . --platforms=android --org=com.example
+
       - name: Install Dependencies & Setup Launcher Icons
         run: |
           flutter pub get
