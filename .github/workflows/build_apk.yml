@@ -42,6 +42,12 @@ jobs:
       - name: Generate Missing Android Platform Files
         run: flutter create . --platforms=android --org=com.example
 
+      - name: Upgrade Android SDK Compile Version to 34
+        run: |
+          sed -i 's/compileSdkVersion .*/compileSdkVersion 34/g' android/app/build.gradle || true
+          sed -i 's/compileSdk .*/compileSdk 34/g' android/app/build.gradle || true
+          sed -i 's/flutter.compileSdkVersion/34/g' android/app/build.gradle || true
+
       - name: Install Dependencies & Setup Launcher Icons
         run: |
           flutter pub get
