@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
                     controller: titleController,
@@ -86,8 +87,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(isStarred ? Icons.star_rounded : Icons.star_border_rounded,
-                            color: isStarred ? const Color(0xFF8AB4F8) : Colors.grey),
+                        icon: Icon(
+                          isStarred ? Icons.star_rounded : Icons.star_border_rounded,
+                          color: isStarred ? const Color(0xFF8AB4F8) : Colors.grey,
+                        ),
                         onPressed: () => setModalState(() => isStarred = !isStarred),
                       ),
                       IconButton(
@@ -142,7 +145,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               repeatRule: repeatRule,
                             );
                             await DatabaseHelper.instance.insertOrUpdate(newTask);
-                            Navigator.pop(context);
+                            if (mounted) {
+                              Navigator.pop(context);
+                            }
                             _loadTasks();
                             _autoSync();
                           }
@@ -273,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         ),
         subtitle: (task.notes.isNotEmpty || task.dueDate != null)
             ? Column(
-                crossAxisAlignment: CrossAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (task.notes.isNotEmpty) Text(task.notes, style: const TextStyle(color: Colors.grey, fontSize: 12)),
                   if (task.dueDate != null)
